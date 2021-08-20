@@ -508,7 +508,7 @@ class NetworkSiteConnection extends Connection {
 	 */
 	public static function bootstrap() {
 		add_action( 'template_redirect', array( '\Distributor\InternalConnections\NetworkSiteConnection', 'canonicalize_front_end' ) );
-		add_action( 'save_post', array( '\Distributor\InternalConnections\NetworkSiteConnection', 'update_syndicated' ) );
+		add_action( 'wp_insert_post', array( '\Distributor\InternalConnections\NetworkSiteConnection', 'update_syndicated' ), 100 );
 		add_action( 'before_delete_post', array( '\Distributor\InternalConnections\NetworkSiteConnection', 'separate_syndicated_on_delete' ) );
 		add_action( 'before_delete_post', array( '\Distributor\InternalConnections\NetworkSiteConnection', 'remove_distributor_post_from_original' ) );
 		add_action( 'wp_trash_post', array( '\Distributor\InternalConnections\NetworkSiteConnection', 'separate_syndicated_on_delete' ) );
@@ -629,7 +629,7 @@ class NetworkSiteConnection extends Connection {
 		}
 
 		// If using Gutenberg, short circuit early and run this method later to make sure terms and meta are saved before syndicating.
-		if ( \Distributor\Utils\is_using_gutenberg( $post ) && doing_action( 'save_post' ) && ! isset( $_GET['meta-box-loader'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+		if ( \Distributor\Utils\is_using_gutenberg( $post ) && doing_action( 'wp_insert_post' ) && ! isset( $_GET['meta-box-loader'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
 			add_action( "rest_after_insert_{$post->post_type}", array( '\Distributor\InternalConnections\NetworkSiteConnection', 'update_syndicated' ) );
 			return;
 		}
