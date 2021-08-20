@@ -181,6 +181,21 @@ function set_meta( $post_id, $meta ) {
 	$existing_meta    = get_post_meta( $post_id );
 	$blacklisted_meta = blacklisted_meta();
 
+	/**
+	 * Filter the post meta before it is set.
+	 *
+	 * Note: All meta is included in the `$meta` array, including blacklisted keys.
+	 *
+	 * @since 0.0.0
+	 * @hook dt_before_set_meta
+	 *
+	 * @param {array} $meta             All received meta for the post
+	 * @param {array} $existing_meta    Existing meta for the post
+	 * @param {array} $blacklisted_meta Blacklisted meta keys
+	 * @param {int}   $post_id          Post ID
+	 */
+	$meta = apply_filters( 'dt_before_set_meta', $meta, $existing_meta, $blacklisted_meta, $post_id );
+
 	foreach ( $meta as $meta_key => $meta_values ) {
 		if ( in_array( $meta_key, $blacklisted_meta, true ) ) {
 			continue;
