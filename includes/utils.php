@@ -480,7 +480,19 @@ function prepare_taxonomy_terms( $post_id ) {
 		$taxonomy_terms[ $taxonomy ] = wp_get_object_terms( $post_id, $taxonomy );
 	}
 
-	return $taxonomy_terms;
+	/**
+	 * Filters the terms that will be synced.
+	 *
+	 * @since 1.0
+	 * @hook dt_taxonomy_terms
+	 *
+	 * @param {array}   $taxonomy_terms Associative array list of terms that will be distributed with the current post in the format of `$taxonomy => $terms`.
+	 * @param {array}   $taxonomies     Associative array list of taxonomies supported by current post in the format of `$taxonomy => $terms`.
+	 * @param {WP_Post} $post           The post object.
+	 *
+	 * @return {array} Associative array list of terms that will be distributed with the current post in the format of `$taxonomy => $terms`.
+	 */
+	return apply_filters( 'dt_taxonomy_terms', $taxonomy_terms, $taxonomies, $post );
 }
 
 /**
