@@ -69,18 +69,10 @@ class NetworkSiteConnection extends Connection {
 		$using_gutenberg   = \Distributor\Utils\is_using_gutenberg( $post );
 		$output            = array();
 
-		/**
-		 * Allows turning off of processing the content when pushing internally.
-		 *
-		 * @hook dt_internal_push_process_content
-		 * @var {bool} true Whether to process the content.
-		 */
-		$process_content = apply_filters( 'dt_internal_push_process_content', true );
-
 		$new_post_args = array(
 			'post_title'   => html_entity_decode( get_the_title( $post_id ), ENT_QUOTES, get_bloginfo( 'charset' ) ),
 			'post_name'    => $post->post_name,
-			'post_content' => $process_content && Utils\get_processed_content( $post->post_content ),
+			'post_content' => Utils\get_processed_content( $post->post_content ),
 			'post_excerpt' => $post->post_excerpt,
 			'post_type'    => $post->post_type,
 			'post_author'  => isset( $post->post_author ) ? $post->post_author : get_current_user_id(),
