@@ -1,5 +1,5 @@
 {
-  "name": "26b/distributor",
+  "name": "10up/distributor",
   "type": "wordpress-plugin",
   "description": "Distributor is a WordPress plugin that makes it easy to distribute and reuse content across your websites — whether in a single multisite or across the web.",
   "homepage": "https://distributorplugin.com/",
@@ -8,10 +8,6 @@
     {
       "name": "10up",
       "email": "opensource@10up.com"
-    },
-    {
-      "name": "26b",
-      "email": "hello@26b.io"
     }
   ],
   "require": {
