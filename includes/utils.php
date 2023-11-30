@@ -1080,8 +1080,18 @@ function dt_use_block_editor_for_post_type( $post_type ) {
  * @return string $post_content The processed post content.
  */
 function get_processed_content( $post_content ) {
-
 	global $wp_embed;
+
+	/**
+	 * Allows turning off of processing the content.
+	 *
+	 * @hook dt_process_content
+	 * @var {bool} true Whether to process the content.
+	 */
+	if ( ! apply_filters( 'dt_process_content', true ) ) {
+		return $post_content;
+	}
+
 	/**
 	 * Remove autoembed filter so that actual URL will be pushed and not the generated markup.
 	 */
