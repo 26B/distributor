@@ -1083,7 +1083,7 @@ function get_processed_content( $post_content ) {
 	global $wp_embed;
 
 	/**
-	 * Allows turning off of processing the content.
+	 * Allows turning off processing the content.
 	 *
 	 * @hook dt_process_content
 	 * @var {bool} true Whether to process the content.
