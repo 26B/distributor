@@ -774,11 +774,20 @@ class DistributorPost {
 	 */
 	protected function post_data() {
 		$this->populate_source_site();
+
+		/**
+		 * Allows turning off of processing the content when pushing internally.
+		 *
+		 * @hook dt_internal_push_process_content
+		 * @var {bool} true Whether to process the content.
+		 */
+		$process_content = \apply_filters( 'dt_internal_push_process_content', true );
+
 		return array(
 			'title'                          => html_entity_decode( get_the_title( $this->post->ID ), ENT_QUOTES, get_bloginfo( 'charset' ) ),
 			'slug'                           => $this->post->post_name,
 			'type'                           => $this->post->post_type,
-			'content'                        => Utils\get_processed_content( $this->post->post_content ),
+			'content'                        => $process_content ? Utils\get_processed_content( $this->post->post_content ) : $this->post->post_content,
 			'excerpt'                        => $this->post->post_excerpt,
 			'parent'                         => ! empty( $this->post->post_parent ) ? (int) $this->post->post_parent : 0,
 			'status'                         => $this->post->post_status,
